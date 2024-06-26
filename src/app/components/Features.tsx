@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Features() {
   return (
-    <section>
+    <section className="py-12 lg:flex lg:px-28 ">
       <FeaturesCard
         title="We Prioritize Speed"
         icon={Bolt}
