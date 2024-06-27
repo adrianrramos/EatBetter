@@ -7,7 +7,7 @@ export default function Navbar() {
       <ul className="flex w-36 justify-between md:w-44 md:text-base">
         <li>Home</li>
         <li>FAQ</li>
-        <Link href={"./login/page.tsx"}>Sign Up</Link>
+        <Link href={"./login"}>Sign Up</Link>
       </ul>
     </nav>
   );
