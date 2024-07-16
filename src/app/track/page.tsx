@@ -1,14 +1,20 @@
 import CalorieBar from "../components/CalorieBar"
 import BottomTabs from "../components/BottomTabs"
-import BreakfastMeal from "../components/BreakfastMeal"
-import LunchMeal from "../components/LunchMeal"
+import MealContainer from "../components/MealContainer"
+
+
+
+
+
 
 export default function TrackPage() {
+  
+
+
   return (
     <>
       <CalorieBar/>
-      <BreakfastMeal/>
-      <LunchMeal/>
+      <MealContainer/>
       <BottomTabs/>
     </>
   )

@@ -1,9 +1,45 @@
-import { faUtensils } from "@fortawesome/free-solid-svg-icons"
+"use client"
+import { faPlus, faUtensils } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react";
+import CustomFood from "./CustomFood";
+import CustomFoodItem from "./CustomFoodItem";
 
 
+export interface Macro {
+    food: string;
+    calories: string;
+    protein: string;
+    carbs: string;
+    fats: string;
+}
+  
+export interface Food {
+    macros: Macro;
+}
+    
 
 export default function BreakfastMeal () {
+    let [foods, setFoods] = useState<Food[]>([]);
+    let [macros, setMacros] = useState<Macro>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
+    let [showInputs, setShowInputs] = useState(false);
+
+    const handleInputs = () => {
+        !showInputs? setShowInputs(true): setShowInputs(false);
+    }
+
+    const handleCalories = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMacros({
+            ...macros,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleAddFood = () => {
+        setFoods(prev => ([...prev, { macros: {...macros} }]))
+    }
+
+
     return (
         <div className="bg-neutral-200 w-11/12 m-auto my-4 border border-green-300 rounded">
             <div className="flex flex-col m-1">
@@ -18,10 +54,16 @@ export default function BreakfastMeal () {
                 </div>
             </div>
             <ul>
-                <li className="border-t-zinc-300 border">temp item</li>
-                <li className="border-t-zinc-300 border">temp item</li>
-                <li className="border-t-zinc-300 border">temp item</li>
-            
+                <button onClick={handleInputs} className="flex items-center mx-1">
+                    <FontAwesomeIcon className="w-4 h-4" icon={faPlus}/>
+                    add food
+                </button>
+                {showInputs? <CustomFood macros={macros} handleInputs={handleInputs} handleAddFood={handleAddFood} handleCalories={handleCalories} /> : null}
+                {
+                    foods.map((food, index) => (
+                        <CustomFoodItem key={index} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
+                    ))
+                }
             </ul>
         </div>
     )
