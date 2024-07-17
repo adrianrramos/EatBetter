@@ -1,11 +1,11 @@
 "use client"
 import { faPlus, faUtensils } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import CustomFood from "./CustomFood";
 import CustomFoodItem from "./CustomFoodItem";
 import MacroMeter from "./MacroMeter";
-
+import { Food } from "../track/page";
 
 export interface Macro {
     food: string;
@@ -15,17 +15,19 @@ export interface Macro {
     fats: string;
 }
   
-export interface Food {
-    macros: Macro;
-}
+// export interface Food {
+//     macros: Macro;
+// }
 
 interface MealProps {
+    newFood: Food[];
+    setNewFoods: React.Dispatch<SetStateAction<Food[]>>;
     title: string;
 }
     
 
-export default function Meal ({title}: MealProps) {
-    const [foods, setFoods] = useState<Food[]>([]);
+export default function Meal ({title, newFood, setNewFoods}: MealProps) {
+    // const [foods, setFoods] = useState<Food[]>([]);
     const [macros, setMacros] = useState<Macro>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
     const [protein, setProtein] = useState(0);
     const [carbs, setCarbs] = useState(0);
@@ -44,14 +46,26 @@ export default function Meal ({title}: MealProps) {
     }
 
     const handleAddFood = () => {
-        let proNum  = Number(macros.protein)
-        let carbNum = Number(macros.carbs)
-        let fatNum = Number(macros.fats)
-        setProtein(proNum)
-        setCarbs(carbNum)
-        setFats(fatNum)
+        const addNewFood = { macros: {...macros} } 
+        setNewFoods(prev => [...prev, addNewFood])
+        let proSum = 0;
+        let carbSum = 0;
+        let fatSum = 0;
+        newFood.forEach((food) => {
+            let pro =  Number(food.macros.protein);
+            let carb = Number(food.macros.carbs);
+            let fat = Number(food.macros.fats);
+            proSum += pro
+            carbSum += carb
+            fatSum += fat
+        })
+        proSum += Number(addNewFood.macros.protein)
+        carbSum += Number(addNewFood.macros.carbs)
+        fatSum += Number(addNewFood.macros.fats)
+        setProtein(proSum)
+        setCarbs(carbSum)
+        setFats(fatSum)
         setMacros({ food: '', calories: '', protein: '', carbs: '', fats: ''})
-        setFoods(prev => ([...prev, { macros: {...macros} }]))
     }
 
    
@@ -77,7 +91,7 @@ export default function Meal ({title}: MealProps) {
                 </button>
                 {showInputs? <CustomFood macros={macros} handleInputs={handleInputs} handleAddFood={handleAddFood} handleCalories={handleCalories} /> : null}
                 {
-                    foods.map((food, index) => (
+                    newFood.map((food, index) => (
                         <CustomFoodItem key={index} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
                     ))
                 }
