@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 export default function UserForm() {
     const [UserData, setUserData] = useState({weight: '', height: '', bodyfat: '', age: ''})
 
@@ -65,6 +64,9 @@ export default function UserForm() {
             </select>
           </label>
         </div>
+        <button onClick={(e) => {
+          e.preventDefault()
+        }} className="bg-white rounded-md w-36">Enter</button>
       </form>
     </div>
   );

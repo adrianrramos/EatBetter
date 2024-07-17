@@ -1,5 +1,5 @@
 "use client"
-import { Macro } from "./BreakfastMeal"
+import { Macro } from "./Meal"
 import CustomFoodItem from "./CustomFoodItem";
 
 

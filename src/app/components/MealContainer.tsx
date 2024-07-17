@@ -1,21 +1,16 @@
-
-import BreakfastMeal from "../components/BreakfastMeal"
-import LunchMeal from "../components/LunchMeal"
-import DinnerMeal from "../components/DinnerMeal"
-import SnackMeal from "../components/SnackMeal"
+import Meal from "./Meal"
 
 
 
   
 export default function MealContainer () {
   
-   
     return (
         <div className="overflow-y-scroll h-[75vh]">
-            <BreakfastMeal/>
-            <LunchMeal/>
-            <DinnerMeal/>
-            <SnackMeal/>
+            <Meal title="Breakfast"/>
+            <Meal title="Lunch"/>
+            <Meal title="Dinner"/>
+            <Meal title="Snack"/>
         </div>
     )
 }
