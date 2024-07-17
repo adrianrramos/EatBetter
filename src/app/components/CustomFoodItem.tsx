@@ -13,9 +13,12 @@ export default function CustomFoodItem ({name, calories, protein, carbs, fats}: 
 
     return (
         <>
-            <div className="w-36 h-24 border border-green-300 rounded">
-                <h3>{name}</h3>
-                <p>{calories}</p>
+            <div className="w-11/12 h-12 m-auto border border-green-300 rounded flex justify-between items-center px-2">
+                <h3 className="capitalize">{name}</h3>
+                <p>{calories + ' cals'}</p>
+                <p>{protein + ' protein'}</p>
+                <p>{carbs + ' carbs'}</p>
+                <p>{fats + ' fats'}</p>
             </div>
         </>
     )

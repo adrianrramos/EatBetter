@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import CustomFood from "./CustomFood";
 import CustomFoodItem from "./CustomFoodItem";
+import MacroMeter from "./MacroMeter";
 
 
 export interface Macro {
@@ -17,12 +18,19 @@ export interface Macro {
 export interface Food {
     macros: Macro;
 }
+
+interface MealProps {
+    title: string;
+}
     
 
-export default function BreakfastMeal () {
-    let [foods, setFoods] = useState<Food[]>([]);
-    let [macros, setMacros] = useState<Macro>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
-    let [showInputs, setShowInputs] = useState(false);
+export default function Meal ({title}: MealProps) {
+    const [foods, setFoods] = useState<Food[]>([]);
+    const [macros, setMacros] = useState<Macro>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
+    const [protein, setProtein] = useState(0);
+    const [carbs, setCarbs] = useState(0);
+    const [fats, setFats] = useState(0);
+    const [showInputs, setShowInputs] = useState(false);
 
     const handleInputs = () => {
         !showInputs? setShowInputs(true): setShowInputs(false);
@@ -36,21 +44,30 @@ export default function BreakfastMeal () {
     }
 
     const handleAddFood = () => {
+        let proNum  = Number(macros.protein)
+        let carbNum = Number(macros.carbs)
+        let fatNum = Number(macros.fats)
+        setProtein(proNum)
+        setCarbs(carbNum)
+        setFats(fatNum)
+        setMacros({ food: '', calories: '', protein: '', carbs: '', fats: ''})
         setFoods(prev => ([...prev, { macros: {...macros} }]))
     }
 
+   
+
 
     return (
-        <div className="bg-neutral-200 w-11/12 m-auto my-4 border border-green-300 rounded">
+        <div className="bg-neutral-200 w-11/12 m-auto my-4 pb-2 border border-green-300 rounded">
             <div className="flex flex-col m-1">
                 <div className="flex">
                     <FontAwesomeIcon className="w-4 h-4 my-auto" icon={faUtensils}/>
-                    <h3>Breakfast</h3>
+                    <h3>{title}</h3>
                 </div>
                 <div className="flex">
-                    <div className="flex text-sm justify-center items-center border border-green-400 w-1/3 rounded">20/25p</div>
-                    <div className="flex text-sm justify-center items-center border border-green-400 w-1/3 rounded mx-2">10/50c</div>
-                    <div className="flex text-sm justify-center items-center border border-green-400 w-1/3 rounded">10/20f</div>
+                    <MacroMeter macroType={protein} initial="p"/>
+                    <MacroMeter macroType={carbs} initial="c"/>
+                    <MacroMeter macroType={fats} initial="f"/>
                 </div>
             </div>
             <ul>
