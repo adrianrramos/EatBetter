@@ -76,15 +76,15 @@ export default function Meal ({title, newFood, setNewFoods}: MealProps) {
                     <h3>{title}</h3>
                 </div>
                 <div className="flex">
-                    <MacroMeter macroType={macroCounts.protein} initial="p"/>
-                    <MacroMeter macroType={macroCounts.carbs} initial="c"/>
-                    <MacroMeter macroType={macroCounts.fats} initial="f"/>
+                    <MacroMeter bgColor="bg-green-300" macroType={macroCounts.protein} initial="p"/>
+                    <MacroMeter bgColor="bg-amber-300" macroType={macroCounts.carbs} initial="c"/>
+                    <MacroMeter bgColor="bg-red-300" macroType={macroCounts.fats} initial="f"/>
                 </div>
             </div>
             <ul>
-                <button onClick={handleToggle} className="flex items-center mx-1">
+                <button onClick={handleToggle} className="flex items-center mx-1 font-bold">
                     <FontAwesomeIcon className="w-4 h-4" icon={faPlus}/>
-                    add food
+                    ADD FOOD
                 </button>
                 {showInputs? <CustomFoodInputs newFoodEntry={newFoodEntry} handleProteinCount={handleProteinCount}  handleAddFood={handleAddFood} handleToggle={handleToggle} handleInputChange={handleInputChange} /> : null}
                 {

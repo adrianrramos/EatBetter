@@ -20,25 +20,25 @@ export default function CustomFoodInputs ({ newFoodEntry, handleAddFood, handleI
         <>
             
             <aside className="w-11/12 m-auto">
-                    <div className="flex flex-col">
-                        <label htmlFor="food">food</label>
-                        <input value={newFoodEntry.food} onChange={handleInputChange} type="text" id="food" name="food" />
+                    <div className="flex justify-between">
+                        <label htmlFor="food">Food</label>
+                        <input className="rounded border border-zinc-300" value={newFoodEntry.food} onChange={handleInputChange} type="text" id="food" name="food" />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="calories">calories</label>
-                        <input value={newFoodEntry.calories} onChange={handleInputChange} type="text" id="calories" name="calories" />
+                    <div className="flex justify-between">
+                        <label htmlFor="calories">Calories</label>
+                        <input className="rounded border border-zinc-300" value={newFoodEntry.calories} onChange={handleInputChange} type="text" id="calories" name="calories" />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="protien">protein</label>
-                        <input value={newFoodEntry.protein} onChange={handleInputChange} type="text" name="protein" />
+                    <div className="flex justify-between">
+                        <label htmlFor="protien">Protein</label>
+                        <input className="rounded border border-zinc-300" value={newFoodEntry.protein} onChange={handleInputChange} type="text" name="protein" />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="carbs">carbs</label>
-                        <input value={newFoodEntry.carbs} onChange={handleInputChange} type="text" id="carbs" name="carbs" />
+                    <div className="flex justify-between">
+                        <label htmlFor="carbs">Carbs</label>
+                        <input className="rounded border border-zinc-300" value={newFoodEntry.carbs} onChange={handleInputChange} type="text" id="carbs" name="carbs" />
                     </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="fat">fats</label>
-                        <input value={newFoodEntry.fats} onChange={handleInputChange} type="text" id="fats" name="fats" />
+                    <div className="flex justify-between">
+                        <label htmlFor="fat">Fats</label>
+                        <input className="rounded border border-zinc-300" value={newFoodEntry.fats} onChange={handleInputChange} type="text" id="fats" name="fats" />
                     </div>
                     <button onClick={() => {
                         handleProteinCount()
