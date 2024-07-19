@@ -13,7 +13,7 @@ export default function CustomFoodItem ({name, calories, protein, carbs, fats}: 
 
     return (
         <>
-            <div className="w-11/12 h-12 m-auto border border-green-300 rounded flex justify-between items-center px-2">
+            <div className="w-12/12 h-12 m-auto border-b border-zinc-300 flex justify-between items-center px-2">
                 <div className="flex flex-col">
                     <h3 className="capitalize">{name}</h3>
                     <p>{calories + ' cals'}</p>
