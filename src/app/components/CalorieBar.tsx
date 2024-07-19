@@ -6,11 +6,11 @@ interface CalorieBarProps {
     calorieProtein: number;
     calorieCarb: number;
     calorieFat: number;
-
+    calorieCount: number;
 }
 
 
-export default function CalorieBar ({calorieProtein, calorieCarb, calorieFat}:CalorieBarProps) {
+export default function CalorieBar ({calorieProtein, calorieCarb, calorieFat, calorieCount}:CalorieBarProps) {
 
 
 
@@ -27,7 +27,7 @@ export default function CalorieBar ({calorieProtein, calorieCarb, calorieFat}:Ca
             <div className="flex items-center justify-center w-1/3 h-7 border border-red-400 rounded text-sm">{calorieFat}/80f</div>
         </div>
         <div className="my-2">
-            <div className="flex items-center justify-center mx-auto w-11/12 h-7 border border-green-400 rounded text-sm">1500/2000cal</div>
+            <div className="flex items-center justify-center mx-auto w-11/12 h-7 border bg-green-300 rounded text-sm">{calorieCount}/2000cal</div>
         </div>
 
     </div>

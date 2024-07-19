@@ -17,21 +17,23 @@ export default function TrackPage() {
   const [lunchFoods, setLunchFoods] = useState<Food[]>([]);
   const [dinnerFoods, setDinnerFoods] = useState<Food[]>([]);
   const [snackFoods, setSnackFoods] = useState<Food[]>([]);
-  const [macroCounts, setMacroCounts] = useState({protein: 0, carbs: 0, fats: 0})
+  const [macroCounts, setMacroCounts] = useState({protein: 0, carbs: 0, fats: 0, calories: 0})
 
   
-  const handleCalorieBarCounts = (newProtein = 0, newCarbs = 0, newFats = 0) => {
+  const handleCalorieBarCounts = (newProtein = 0, newCarbs = 0, newFats = 0, newCalories = 0) => {
     let proteins = newProtein;
     let carbs = newCarbs;
     let fats = newFats;
+    let calories = newCalories;
     [breakFastFoods, lunchFoods, dinnerFoods, snackFoods].forEach((meal) => {
       meal.forEach((food) => {
         proteins += Number(food.macros.protein)
         carbs += Number(food.macros.carbs)
         fats += Number(food.macros.fats)
+        calories += Number(food.macros.calories)
       });
     });
-    setMacroCounts({protein: proteins, carbs: carbs, fats: fats})
+    setMacroCounts({protein: proteins, carbs: carbs, fats: fats, calories: calories})
   };
 
 
@@ -40,7 +42,7 @@ export default function TrackPage() {
     
      <>
      <CalorieBarContext.Provider value={{handleCalorieBarCounts}}>
-        <CalorieBar calorieCarb={macroCounts.carbs} calorieFat={macroCounts.fats} calorieProtein={macroCounts.protein}/>
+        <CalorieBar calorieCount={macroCounts.calories} calorieCarb={macroCounts.carbs} calorieFat={macroCounts.fats} calorieProtein={macroCounts.protein}/>
           <MealContainer
             breakfastFoods={breakFastFoods}
             setBreakfastFood={setBreakfastFood}
