@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
     protein: string;
     carbs: string;
     fats: string;
-    onDelete: (index:number) => void
+    onDelete: (index:number) => void;
+    subMacros: (index:number) => void;
 }
 
 
-export default function CustomFoodItem ({name, calories, protein, carbs, fats, onDelete}: CustomFoodItemProps) {
+export default function CustomFoodItem ({name, calories, protein, carbs, fats, onDelete, subMacros}: CustomFoodItemProps) {
 
     return (
         <>
@@ -20,11 +21,14 @@ export default function CustomFoodItem ({name, calories, protein, carbs, fats, o
                     <h3 className="capitalize">{name}</h3>
                 </div>
                 <div className="flex  items-center">
-                    <FontAwesomeIcon onClick={() => onDelete(0)}  className="mx-2" icon={faTrashCan}/>
+                    <FontAwesomeIcon onClick={() => {
+                        onDelete(0)
+                        subMacros(0)
+                    }}  className="mx-2" icon={faTrashCan}/>
 
-                    {/* <p>{protein + ' protein'}</p>
+                    <p>{protein + ' protein'}</p>
                     <p>{carbs + ' carbs'}</p>
-                    <p>{fats + ' fats'}</p> */}
+                    <p>{fats + ' fats'}</p>
                     <p>{calories}</p>
                 </div>
             </div>

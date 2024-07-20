@@ -41,7 +41,7 @@ export default function Meal ({title, mealArr, setMealArr}: MealProps) {
         })
     }
 
-    const handleProteinCount = () => {
+    const handleAddMacros = () => {
         const addNewFood = { newFood: {...newFoodEntry} } 
         let proSum = 0;
         let carbSum = 0;
@@ -66,14 +66,45 @@ export default function Meal ({title, mealArr, setMealArr}: MealProps) {
         setMealArr(prev => [...prev, addNewFood])
         setNewFoodEntry({ food: '', calories: '', protein: '', carbs: '', fats: ''})
         const { protein, carbs, fats , calories } = addNewFood.macros;
-        handleCalorieBar.handleCalorieBarCounts(Number(protein), Number(carbs), Number(fats), Number(calories))
+        handleCalorieBar.handleAddBarCounts(Number(protein), Number(carbs), Number(fats), Number(calories))
     }
 
     const handleDeleteFood = (index: number) => {
         setMealArr(currentMeal => currentMeal.filter((_,i) => i !== index));
+        let oldPro = 0;
+        let oldCarbs = 0;
+        let oldFats = 0;
+        let oldCals = 0;
+        mealArr.forEach((food, i) => {
+            if(i == index) {
+                oldPro = Number(food.macros.protein);
+                oldCarbs = Number(food.macros.carbs)
+                oldFats = Number(food.macros.fats)
+                oldCals = Number(food.macros.calories)
+            }
+            
+        })
+    
+       handleCalorieBar.handleSubBarCounts(Number(oldPro), Number(oldCarbs), Number(oldFats), Number(oldCals))
     }
 
+    const handleSubMacros = (index: number) => {
+        let subPro = macroCounts.protein;
+        let subCarb = macroCounts.carbs;
+        let subFat = macroCounts.fats;
+        let subCal = macroCounts.calories
+        mealArr.forEach((food,i) => {
+            if(i === index) {
+                subPro -= Number(food.macros.protein);
+                subCarb -= Number(food.macros.carbs);
+                subFat -= Number(food.macros.fats)
+                subCal -= Number(food.macros.calories)
+            }
+        })
+        setMacroCounts({protein: subPro, carbs: subCarb, fats: subFat, calories: subCal})
+    }
 
+    
     return (
         <div className="bg-neutral-200 w-11/12 m-auto my-4 border border-green-300 rounded">
             <div className="flex flex-col m-1">
@@ -95,10 +126,10 @@ export default function Meal ({title, mealArr, setMealArr}: MealProps) {
             <ul>
                 {
                     mealArr.map((food, index) => (
-                        <CustomFoodItem key={index} onDelete={handleDeleteFood} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
+                        <CustomFoodItem key={index} subMacros={handleSubMacros} onDelete={handleDeleteFood} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
                     ))
                 }
-                {showInputs? <CustomFoodInputs newFoodEntry={newFoodEntry} handleProteinCount={handleProteinCount}  handleAddFood={handleAddFood} handleToggle={handleToggle} handleInputChange={handleInputChange} /> : null}
+                {showInputs? <CustomFoodInputs newFoodEntry={newFoodEntry} handleProteinCount={handleAddMacros}  handleAddFood={handleAddFood} handleToggle={handleToggle} handleInputChange={handleInputChange} /> : null}
                 <button onClick={handleToggle} className="flex items-center p-0.5 font-bold">
                     <FontAwesomeIcon className="w-4 h-4" icon={faPlus}/>
                     ADD FOOD
