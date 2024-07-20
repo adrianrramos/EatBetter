@@ -27,10 +27,10 @@ export default function MealContainer ({
   
     return (
         <div className="overflow-y-scroll h-[75vh]">
-            <Meal newFood={breakfastFoods} setNewFoods={setBreakfastFood} title="Breakfast"/>
-            <Meal newFood={lunchFoods} setNewFoods={setLunchFood} title="Lunch"/>
-            <Meal newFood={dinnerFoods} setNewFoods={setDinnerFood} title="Dinner"/>
-            <Meal newFood={snackFoods} setNewFoods={setSnackFood} title="Snack"/>
+            <Meal mealArr={breakfastFoods} setMealArr={setBreakfastFood} title="Breakfast"/>
+            <Meal mealArr={lunchFoods} setMealArr={setLunchFood} title="Lunch"/>
+            <Meal mealArr={dinnerFoods} setMealArr={setDinnerFood} title="Dinner"/>
+            <Meal mealArr={snackFoods} setMealArr={setSnackFood} title="Snack"/>
         </div>
     )
 }
