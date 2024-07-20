@@ -20,7 +20,7 @@ export default function TrackPage() {
   const [macroCounts, setMacroCounts] = useState({protein: 0, carbs: 0, fats: 0, calories: 0})
 
   
-  const handleCalorieBarCounts = (newProtein = 0, newCarbs = 0, newFats = 0, newCalories = 0) => {
+  const handleAddBarCounts = (newProtein = 0, newCarbs = 0, newFats = 0, newCalories = 0) => {
     let proteins = newProtein;
     let carbs = newCarbs;
     let fats = newFats;
@@ -36,12 +36,27 @@ export default function TrackPage() {
     setMacroCounts({protein: proteins, carbs: carbs, fats: fats, calories: calories})
   };
 
+  const handleSubBarCounts = (deletedPro: number, deletedCarb:number, deletedFat:number, deletedCals: number) => {
+    let currentPro = macroCounts.protein;
+    let currentCarbs = macroCounts.carbs;
+    let currentFat = macroCounts.fats;
+    let currentCals = macroCounts.calories;
+
+    currentPro -= deletedPro;
+    currentCarbs -= deletedCarb;
+    currentFat -= deletedFat;
+    currentCals -= deletedCals;
+   
+    setMacroCounts({ protein: currentPro, carbs: currentCarbs, fats: currentFat, calories: currentCals})
+  };
+
+
 
 
   return (
     
      <>
-     <CalorieBarContext.Provider value={{handleCalorieBarCounts}}>
+     <CalorieBarContext.Provider value={{handleAddBarCounts, handleSubBarCounts}}>
         <CalorieBar calorieCount={macroCounts.calories} calorieCarb={macroCounts.carbs} calorieFat={macroCounts.fats} calorieProtein={macroCounts.protein}/>
           <MealContainer
             breakfastFoods={breakFastFoods}
