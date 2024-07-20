@@ -18,13 +18,13 @@ export interface NewFoodEntry {
 
 
 interface MealProps {
-    newFood: Food[];
-    setNewFoods: React.Dispatch<SetStateAction<Food[]>>;
+    mealArr: Food[];
+    setMealArr: React.Dispatch<SetStateAction<Food[]>>;
     title: string;
 }
     
 
-export default function Meal ({title, newFood, setNewFoods}: MealProps) {
+export default function Meal ({title, mealArr, setMealArr}: MealProps) {
     const [newFoodEntry, setNewFoodEntry] = useState<NewFoodEntry>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
     const [macroCounts, setMacroCounts] = useState({ protein: 0, carbs: 0, fats: 0, calories: 0});
     const [showInputs, setShowInputs] = useState(false);
@@ -47,7 +47,7 @@ export default function Meal ({title, newFood, setNewFoods}: MealProps) {
         let carbSum = 0;
         let fatSum = 0;
         let caloriesSum = 0;
-        newFood.forEach((food) => {
+        mealArr.forEach((food) => {
            let { protein, carbs, fats, calories } = food.macros
            proSum += Number(protein);
            carbSum += Number(carbs);
@@ -63,20 +63,28 @@ export default function Meal ({title, newFood, setNewFoods}: MealProps) {
 
     const handleAddFood = () => {
         const addNewFood = { macros: {...newFoodEntry} } 
-        setNewFoods(prev => [...prev, addNewFood])
+        setMealArr(prev => [...prev, addNewFood])
         setNewFoodEntry({ food: '', calories: '', protein: '', carbs: '', fats: ''})
         const { protein, carbs, fats , calories } = addNewFood.macros;
         handleCalorieBar.handleCalorieBarCounts(Number(protein), Number(carbs), Number(fats), Number(calories))
+    }
 
+    const handleDeleteFood = (index: number) => {
+        setMealArr(currentMeal => currentMeal.filter((_,i) => i !== index));
     }
 
 
     return (
         <div className="bg-neutral-200 w-11/12 m-auto my-4 border border-green-300 rounded">
             <div className="flex flex-col m-1">
-                <div className="flex">
-                    <FontAwesomeIcon className="w-4 h-4 my-auto" icon={faUtensils}/>
-                    <h3>{title}</h3>
+                <div className="flex justify-between">
+                    <div className="flex">
+                        <FontAwesomeIcon className="w-4 h-4 my-auto" icon={faUtensils}/>
+                        <h3>{title}</h3>
+                    </div>
+                    <h3 className="pr-2">
+                        {macroCounts.calories}
+                    </h3>
                 </div>
                 <div className="flex">
                     <MacroMeter bgColor="bg-green-300" macroType={macroCounts.protein} initial="p"/>
@@ -86,8 +94,8 @@ export default function Meal ({title, newFood, setNewFoods}: MealProps) {
             </div>
             <ul>
                 {
-                    newFood.map((food, index) => (
-                        <CustomFoodItem key={index} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
+                    mealArr.map((food, index) => (
+                        <CustomFoodItem key={index} onDelete={handleDeleteFood} name={food.macros.food} calories={food.macros.calories} protein={food.macros.protein} carbs={food.macros.carbs} fats={food.macros.fats} />
                     ))
                 }
                 {showInputs? <CustomFoodInputs newFoodEntry={newFoodEntry} handleProteinCount={handleProteinCount}  handleAddFood={handleAddFood} handleToggle={handleToggle} handleInputChange={handleInputChange} /> : null}
