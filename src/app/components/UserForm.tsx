@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 export default function UserForm() {
     const [userData, setUserData] = useState({calories: 0, protein: 0, carbohydrates: 0, fats: 0})
     const [diet, setDiet] = useState({dietCals: 0, proGrams: 0, carbGrams: 0, fatGrams: 0})
@@ -56,7 +57,7 @@ export default function UserForm() {
           />
         </div>
         <div className="flex w-9/12 flex-col ">
-          <label htmlFor="height">{`${userData.protein}% Protein`}</label>
+          <label htmlFor="height" className="font-bold">{`${userData.protein}% Protein`}</label>
           <p>{diet.proGrams + ' grams'}</p>
           <input
             className="rounded border border-black md:h-12 lg:w-9/12"
@@ -69,7 +70,7 @@ export default function UserForm() {
           />
         </div>
         <div className="flex w-9/12 flex-col ">
-          <label htmlFor="carbohydrates">{`${userData.carbohydrates}% Carbs`}</label>
+          <label htmlFor="carbohydrates" className="font-bold">{`${userData.carbohydrates}% Carbs`}</label>
           <p>{diet.carbGrams + ' grams'}</p>
           <input
             className="rounded border border-black md:h-12 lg:w-9/12"
@@ -82,7 +83,7 @@ export default function UserForm() {
           />
         </div>
         <div className="flex w-9/12 flex-col ">
-          <label htmlFor="Fats">{`${userData.fats}% Fats`}</label>
+          <label htmlFor="Fats" className="font-bold">{`${userData.fats}% Fats`}</label>
           <p>{diet.fatGrams + ' grams'}</p>
           <input
             className="rounded border border-black md:h-12 lg:w-9/12"
@@ -94,9 +95,15 @@ export default function UserForm() {
             value={userData.fats}
           />
         </div>
-        <button onClick={(e) => {
-          e.preventDefault()
-        }} className="bg-white rounded-md w-36">Enter</button>
+        <Link href={{
+          pathname: '/track',
+          query: {
+            protein: diet.proGrams,
+            carbs: diet.carbGrams,
+            fats: diet.fatGrams,
+            cals: diet.dietCals,
+          }
+        }} className="bg-white rounded-md w-36">Enter</Link>
       </form> 
     </div>
     
