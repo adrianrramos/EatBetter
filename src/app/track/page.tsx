@@ -7,6 +7,7 @@ import { NewFoodEntry } from "../components/Meal"
 import { CalorieBarContext } from "../components/context/CalorieBarContext"
 
 
+
 export interface Food {
   macros: NewFoodEntry;
 }
@@ -18,6 +19,7 @@ export default function TrackPage() {
   const [dinnerFoods, setDinnerFoods] = useState<Food[]>([]);
   const [snackFoods, setSnackFoods] = useState<Food[]>([]);
   const [macroCounts, setMacroCounts] = useState({protein: 0, carbs: 0, fats: 0, calories: 0})
+
 
   
   const handleAddBarCounts = (newProtein = 0, newCarbs = 0, newFats = 0, newCalories = 0) => {
