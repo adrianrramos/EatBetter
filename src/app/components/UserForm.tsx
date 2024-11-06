@@ -96,7 +96,7 @@ export default function UserForm() {
           />
         </div>
         <Link href={{
-          pathname: '/track',
+          pathname: '/dashboard',
           query: {
             protein: diet.proGrams,
             carbs: diet.carbGrams,

@@ -2,6 +2,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
+import { signOut } from "../login/actions"
 
 interface CalorieBarProps {
     calorieProtein: number;
@@ -33,6 +34,11 @@ export default function CalorieBar ({calorieProtein, calorieCarb, calorieFat, ca
 
  return (
     <div className="bg-neutral-200 border-b border-green-200">
+       <form action="/auth/signout" method="post">
+          <button className="button block" type="submit">
+            Sign out
+          </button>
+        </form>
         <div className="flex justify-center">
             <FontAwesomeIcon icon={faArrowLeft} className="h-7 w-7 py-1"/>
             <p className="px-6 py-1 text-lg">Date</p>
@@ -46,7 +52,7 @@ export default function CalorieBar ({calorieProtein, calorieCarb, calorieFat, ca
         <div className="my-2">
             <div className="flex items-center justify-center mx-auto w-11/12 h-7 border bg-green-300 rounded text-sm">{calorieCount}/{goal.calGoal}cal</div>
         </div>
-
+       
     </div>
 
  )
