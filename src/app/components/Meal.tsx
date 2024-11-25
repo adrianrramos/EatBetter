@@ -2,11 +2,13 @@
 import { faPlus, faUtensils } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SetStateAction, useState, useContext } from "react";
-import { Food } from "../track/page";
+import { Food } from "../dashboard/page";
 import { CalorieBarContext } from "./context/CalorieBarContext";
 import CustomFoodInputs from "./CustomFoodInputs";
 import CustomFoodItem from "./CustomFoodItem";
 import MacroMeter from "./MacroMeter";
+import { useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export interface NewFoodEntry {
     food: string;
@@ -22,12 +24,21 @@ interface MealProps {
     setMealArr: React.Dispatch<SetStateAction<Food[]>>;
     title: string;
 }
+
+type diet = {
+    daily_proteins: number,
+    daily_carbs: number,
+    daily_fats: number
+  }
+  
     
 
 export default function Meal ({title, mealArr, setMealArr}: MealProps) {
     const [newFoodEntry, setNewFoodEntry] = useState<NewFoodEntry>({ food: '', calories: '', protein: '', carbs: '', fats: ''});
     const [macroCounts, setMacroCounts] = useState({ protein: 0, carbs: 0, fats: 0, calories: 0});
     const [showInputs, setShowInputs] = useState(false);
+    const [mealMacros, setMealMacros] = useState({ protein: 0, carbs: 0, fats: 0})
+
     const handleCalorieBar = useContext(CalorieBarContext)
 
     const handleToggle = () => {
@@ -103,6 +114,28 @@ export default function Meal ({title, mealArr, setMealArr}: MealProps) {
         })
         setMacroCounts({protein: subPro, carbs: subCarb, fats: subFat, calories: subCal})
     }
+    
+
+
+
+    useEffect(() => {
+        const supabase = createClient();
+        const fetchDiet  = async() => {
+          const { data: { user }} = await supabase.auth.getUser();
+          const {data, error } = await supabase
+          .from("macro_goals")
+          .select()
+          .eq('user_id', user?.id)
+          if(data && data.length > 0) {
+            const diet: diet = data[0]
+            console.log(diet)
+            setMealMacros({ protein: diet.daily_proteins, carbs: diet.daily_carbs, fats: diet.daily_fats })
+          } else {
+            console.log('the data is null')
+          }
+        }
+        fetchDiet()
+    },[])
 
     
     return (
@@ -118,9 +151,9 @@ export default function Meal ({title, mealArr, setMealArr}: MealProps) {
                     </h3>
                 </div>
                 <div className="flex">
-                    <MacroMeter bgColor="bg-green-300" macroType={macroCounts.protein} initial="p"/>
-                    <MacroMeter bgColor="bg-amber-300" macroType={macroCounts.carbs} initial="c"/>
-                    <MacroMeter bgColor="bg-red-300" macroType={macroCounts.fats} initial="f"/>
+                    <MacroMeter bgColor="bg-green-300" initialMacro={macroCounts.protein} dailyMacroGoal={mealMacros.protein / 4} macroType="p"  />
+                    <MacroMeter bgColor="bg-amber-300" initialMacro={macroCounts.carbs} dailyMacroGoal={mealMacros.carbs / 4} macroType="c"  />
+                    <MacroMeter bgColor="bg-red-300" initialMacro={macroCounts.fats} dailyMacroGoal={mealMacros.fats / 4} macroType="f" />
                 </div>
             </div>
             <ul>

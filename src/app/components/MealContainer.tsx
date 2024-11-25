@@ -1,5 +1,5 @@
 import Meal from "./Meal"
-import { Food } from "../track/page";
+import { Food } from "../dashboard/page";
 import { SetStateAction } from "react";
 
 interface MealContainerProps {
